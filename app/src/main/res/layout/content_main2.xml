@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Main2Activity"
+    android:orientation="vertical"
+    tools:showIn="@layout/app_bar_main2">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="3"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food"
+            android:layout_weight="1"
+            android:background="#4F2B8F"
+            android:id="@+id/bt_food"
+            android:textColor="#fff"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cloth"
+            android:layout_weight="1"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="#4F2B8F"
+            android:id="@+id/bt_cloth"
+            android:textColor="#fff"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:id="@+id/bt_other"
+            android:layout_weight="1"
+            android:background="#4F2B8F"
+            android:textColor="#fff"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@android:id/tabcontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+</LinearLayout>
