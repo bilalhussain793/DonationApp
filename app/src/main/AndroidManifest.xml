@@ -14,8 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".OtherActivity"></activity>
-        <activity android:name=".ClothActivity" />
-        <activity android:name=".FoodActivity" />
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
