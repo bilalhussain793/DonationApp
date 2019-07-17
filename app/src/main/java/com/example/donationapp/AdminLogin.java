@@ -118,8 +118,7 @@ public class AdminLogin extends AppCompatActivity {
                     et_em.setError("Invalid Contact");
                     pd.dismiss();
                 }
-//
-                //              }
+
             }
 
             @Override
