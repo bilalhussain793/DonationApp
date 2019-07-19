@@ -12,11 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +38,14 @@ public class Other extends Fragment {
     private Fragment baseContext;
     private int contentView;
 
+    ListView lv;
+    ArrayList<String> arrayList=new ArrayList<String>();
+    ArrayAdapter<String> adapter;
+    Firebase firebase;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    Firebase fb;
+    String a,b;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -44,6 +56,47 @@ public class Other extends Fragment {
         view = inflater.inflate(R.layout.fragment_food, container, false);
 
 
+        Firebase.setAndroidContext(getContext());
+
+
+        lv=view.findViewById(R.id.lv);
+
+        firebase=new Firebase("https://donationapp-f4b46.firebaseio.com/donations/Other");
+
+        adapter=new ArrayAdapter<String>(getContext(),R.layout.support_simple_spinner_dropdown_item,arrayList);
+
+        lv.setAdapter(adapter);
+
+        firebase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+
+                arrayList.add(s);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(), ""+s, Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onChildChanged(com.firebase.client.DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(com.firebase.client.DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
         return view;

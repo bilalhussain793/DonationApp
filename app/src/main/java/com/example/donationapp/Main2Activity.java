@@ -39,11 +39,19 @@ public class Main2Activity extends AppCompatActivity
         bt_food=findViewById(R.id.bt_food);
         bt_cloth=findViewById(R.id.bt_cloth);
         bt_other=findViewById(R.id.bt_other);
+        Food blankFragment=new Food();
+        // create a FragmentManager
+        FragmentManager fm = getFragmentManager();
+        // create a FragmentTransaction to begin the transaction and replace the Fragment
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        // replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.frame_layout, blankFragment);
+        fragmentTransaction.commit(); // save the changes
 
         bt_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
                 Food blankFragment=new Food();
                 // create a FragmentManager
                 FragmentManager fm = getFragmentManager();
@@ -58,7 +66,7 @@ public class Main2Activity extends AppCompatActivity
         bt_cloth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
                 Cloth blankFragment1=new Cloth();
                 // create a FragmentManager
                 FragmentManager fm = getFragmentManager();
@@ -73,7 +81,7 @@ public class Main2Activity extends AppCompatActivity
         bt_other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(Main2Activity.this, "hi", Toast.LENGTH_SHORT).show();
                 Other blankFragment2=new Other();
                 // create a FragmentManager
                 FragmentManager fm = getFragmentManager();
@@ -143,8 +151,10 @@ public class Main2Activity extends AppCompatActivity
 
         if (id == R.id.nav_cmp) {
             // Handle the camera action
-        } else if (id == R.id.nav_share) {
+            Toast.makeText(this, "Details are there", Toast.LENGTH_SHORT).show();
 
+        } else if (id == R.id.nav_share) {
+            Toast.makeText(this, "Upload app on playstore first", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_rate) {
 
         } else if (id == R.id.nav_logout) {
@@ -164,6 +174,7 @@ public class Main2Activity extends AppCompatActivity
 
                     editor.putString("acc type","");
                     editor.apply();
+                    finish();
 
                 }
             });
