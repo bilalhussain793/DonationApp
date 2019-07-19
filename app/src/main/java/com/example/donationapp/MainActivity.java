@@ -27,5 +27,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,AdminLogin.class));
             }
         });
+        btn_org.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,OrgLogin.class));
+            }
+        });
+        btn_dnr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,UserLogin.class));
+            }
+        });
     }
 }

@@ -24,9 +24,7 @@ public class AdminLogin extends AppCompatActivity {
     Button bt_login;
     EditText et_em, et_ps;
 
-
     ProgressDialog pd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

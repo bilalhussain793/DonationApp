@@ -10,6 +10,16 @@
     android:weightSum="7"
     tools:context=".AdminLogin">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Admin Panel"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textColor="#673AB7"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -33,7 +43,7 @@
             android:id="@+id/et_email"
             android:paddingLeft="10dp"
             android:textColorHint="#C9673AB7"
-            android:hint="Email"
+            android:hint="ADMIN ID"
             android:inputType="textEmailAddress"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"

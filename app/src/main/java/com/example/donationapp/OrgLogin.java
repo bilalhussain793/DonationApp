@@ -10,25 +10,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class UserLogin extends AppCompatActivity {
+public class OrgLogin extends AppCompatActivity {
 
     Button bt_login;
     EditText et_pn,et_ps;
     Button reg_btn;
     ProgressDialog pd;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_login);
+        setContentView(R.layout.activity_org_login);
 
         et_pn=findViewById(R.id.et_email);
         et_ps=findViewById(R.id.et_pass);
@@ -39,9 +37,9 @@ public class UserLogin extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("LOGIN1", MODE_PRIVATE);
         int r = prefs.getInt("flg", 0);
         String s = prefs.getString("phone", null);
-        if (r == 3) {
+        if (r == 2) {
             usern.usr=s;
-            startActivity(new Intent(new Intent(UserLogin.this,UserHome.class)));
+            startActivity(new Intent(new Intent(OrgLogin.this,UserHome.class)));
             finish();
         }else{
             Toast.makeText(this, "Login here", Toast.LENGTH_SHORT).show();
@@ -58,7 +56,7 @@ public class UserLogin extends AppCompatActivity {
         reg_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(UserLogin.this,OrgRegister.class));
+                startActivity(new Intent(OrgLogin.this,OrgRegister.class));
             }
         });
 
@@ -67,8 +65,8 @@ public class UserLogin extends AppCompatActivity {
     public void validlogin(final EditText phone, final EditText password){
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users/"+phone.getText().toString());
-        pd=new ProgressDialog(UserLogin.this);
+        DatabaseReference myRef = database.getReference("org/"+phone.getText().toString());
+        pd=new ProgressDialog(OrgLogin.this);
         pd.setTitle("Loading....");
         pd.show();
 
@@ -85,21 +83,24 @@ public class UserLogin extends AppCompatActivity {
 
                     if(password.getText().toString().equals(pass)){
 
-                        SharedPreferences.Editor editor = getSharedPreferences("LOGIN1", MODE_PRIVATE).edit();
-                        editor.putInt("flg", 3);
-                        editor.putString("phone",phone.getText().toString());
-                        editor.apply();
-                        startActivity(new Intent(UserLogin.this,UserHome.class));
-                        pd.dismiss();
+                            SharedPreferences.Editor editor = getSharedPreferences("LOGIN1", MODE_PRIVATE).edit();
+                            editor.putInt("flg", 2);
+                            editor.putString("phone",phone.getText().toString());
+                            editor.apply();
+                            startActivity(new Intent(OrgLogin.this,UserHome.class));
+                            pd.dismiss();
 
                     }else {
+
                         password.setError("Wrong Password");
                     }
 
                 }else {
                     phone.setError("Invalid Contact");
                 }
+
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value

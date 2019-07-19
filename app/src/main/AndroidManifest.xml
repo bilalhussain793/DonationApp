@@ -13,7 +13,11 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserLogin"></activity>
+        <activity android:name=".UserHome"></activity>
+        <activity android:name=".OrgRegister" />
+        <activity android:name=".OrgLogin" />
+        <activity android:name=".UserRegister" />
+        <activity android:name=".UserLogin" />
         <activity android:name=".OtherActivity" />
         <activity
             android:name=".Main2Activity"
