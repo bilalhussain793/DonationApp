@@ -87,6 +87,7 @@ public class OrgLogin extends AppCompatActivity {
                             editor.putInt("flg", 2);
                             editor.putString("phone",phone.getText().toString());
                             editor.apply();
+                            usern.usr=phone.getText().toString();
                             startActivity(new Intent(OrgLogin.this,UserHome.class));
                             pd.dismiss();
 

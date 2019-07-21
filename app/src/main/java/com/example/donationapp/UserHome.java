@@ -104,7 +104,7 @@ public class UserHome extends AppCompatActivity {
             public void onClick(View v) {
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("donations/"+spinner.getSelectedItem().toString()+"/"+userid);
+                DatabaseReference myRef = database.getReference("donations/"+spinner.getSelectedItem().toString()+"/"+et_desc.getText().toString());
 
                 uploadImage();
                 myRef.child("User").setValue(userid);

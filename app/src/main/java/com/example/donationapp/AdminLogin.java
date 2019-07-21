@@ -13,118 +13,123 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AdminLogin extends AppCompatActivity {
 
-    Button bt_login;
-    EditText et_em, et_ps;
-
-    ProgressDialog pd;
+    EditText username, password;
+    Button loginButton;
+    String user, pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        et_em = findViewById(R.id.et_email);
-        et_ps = findViewById(R.id.et_pass);
 
-        bt_login = findViewById(R.id.btn_login);
+        username = (EditText)findViewById(R.id.et_email);
+        password = (EditText)findViewById(R.id.et_pass);
+        loginButton = (Button)findViewById(R.id.btn_login);
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
+
+        login_validity();
+
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                user = username.getText().toString();
+                pass = password.getText().toString();
 
-                validlogin();
+                if(user.equals("")){
+                    username.setError("can't be blank");
+                }
+                else if(pass.equals("")){
+                    password.setError("can't be blank");
+                }
+                else{
+                    String url = "https://donationapp-f4b46.firebaseio.com/admins.json";
+                    final ProgressDialog pd = new ProgressDialog(AdminLogin.this);
+                    pd.setTitle("Loading");
+                    pd.show();
+
+                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String s) {
+                            if(s.equals("null")){
+                                Toast.makeText(AdminLogin.this, "user not found", Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                try {
+                                    JSONObject obj = new JSONObject(s);
+
+                                    if(!obj.has(user)){
+                                        Toast.makeText(AdminLogin.this, "user not found", Toast.LENGTH_LONG).show();
+                                    }
+                                    else if(obj.getJSONObject(user).getString("Password").equals(pass)){
+                                        usern.username = user;
+                                        usern.password = pass;
+                                        SharedPreferences.Editor editor = getSharedPreferences("log", MODE_PRIVATE).edit();
+                                        editor.putInt("flg", 2);
+                                        editor.putString("Em", user);
+                                        editor.apply();
+                                        startActivity(new Intent(AdminLogin.this, Main2Activity.class));
+                                    }
+                                    else {
+                                        Toast.makeText(AdminLogin.this, "incorrect password", Toast.LENGTH_LONG).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            pd.dismiss();
+                        }
+                    },new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            System.out.println("" + volleyError);
+                            pd.dismiss();
+                        }
+                    });
+
+                    RequestQueue rQueue = Volley.newRequestQueue(AdminLogin.this);
+                    rQueue.add(request);
+                }
 
             }
         });
+    }
 
-
-
-        SharedPreferences prefs = getSharedPreferences("LOGIN", MODE_PRIVATE);
+    public void login_validity(){
+        SharedPreferences prefs = getSharedPreferences("log", MODE_PRIVATE);
         int r = prefs.getInt("flg", 0);
         String na=prefs.getString("Em",null);
-        usern.username=na;
 
         if (r == 2) {
-            String a=prefs.getString("acc type",null);
 
-            if(a.length()==0){
-
+            if(na.length()==0){
+                Toast.makeText(this, "Login here", Toast.LENGTH_SHORT).show();
             }
-            else if (a.equals("Tailor")) {
-
+            else {
+                usern.username=na;
                 startActivity(new Intent(AdminLogin.this, Main2Activity.class));
-            }
-            else if(a.equals("User"))
-            {
-                startActivity(new Intent(AdminLogin.this, Main2Activity.class));
-                pd.dismiss();
             }
         }else{
             Toast.makeText(this, "Login here", Toast.LENGTH_SHORT).show();
         }
-
-
-    }
-
-    public void validlogin() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("admins/"+et_em.getText().toString());
-        pd = new ProgressDialog(AdminLogin.this);
-        pd.setTitle("Loading....");
-        pd.show();
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String em = dataSnapshot.child("Email").getValue(String.class);
-                String pass = dataSnapshot.child("Password").getValue(String.class);
-                String type = dataSnapshot.child("acc type").getValue(String.class);
-
-                if (et_em.getText().toString().equals(em)) {
-
-                    if (et_ps.getText().toString().equals(pass)) {
-
-
-                            SharedPreferences.Editor editor = getSharedPreferences("LOGIN", MODE_PRIVATE).edit();
-                            editor.putInt("flg", 2);
-                            editor.putString("Em", et_em.getText().toString());
-
-                            editor.putString("acc type",type);
-                            editor.apply();
-
-                                startActivity(new Intent(AdminLogin.this, Main2Activity.class));
-                                pd.dismiss();
-
-
-                    } else {
-
-                        et_ps.setError("Wrong Password");
-                        pd.dismiss();
-                    }
-
-                } else {
-                    et_em.setError("Invalid Contact");
-                    pd.dismiss();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("TAG", "Failed to read value.", error.toException());
-                et_em.setError("Invalid User");
-            }
-        });
     }
 }
