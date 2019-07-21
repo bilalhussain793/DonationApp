@@ -60,12 +60,11 @@ public class Other extends Fragment {
     ImageView iv;
     TextView tvd,tvn,tvc;
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-// Inflate the layout for this fragment
+    // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_food, container, false);
 

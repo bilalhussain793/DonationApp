@@ -67,6 +67,11 @@ public class OrgRegister extends AppCompatActivity {
                 else if(et_phone.getText().toString().equals("")){
                     et_phone.setError("can't be blank");
                 }
+                else if(et_phone.getText().toString().matches("[0-9]+")){
+
+                    et_phone.setError("Only Number is allowed");
+
+                }
                 else if(et_org.getText().toString().equals("")){
                     et_org.setError("can't be blank");
                 }

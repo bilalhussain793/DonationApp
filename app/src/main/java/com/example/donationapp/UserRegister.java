@@ -52,6 +52,8 @@ public class UserRegister extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String pp=et_phone.getText().toString();
                 email = et_email.getText().toString();
                 pass = password.getText().toString();
 
@@ -75,6 +77,11 @@ public class UserRegister extends AppCompatActivity {
                 }
                 else if(email.length()<5){
                     et_email.setError("at least 5 characters long");
+                }
+                else if(pp.matches("[0-9]+")){
+
+                    et_phone.setError("Only Number is allowed");
+
                 }
                 else if(pass.length()<5){
                     password.setError("at least 5 characters long");

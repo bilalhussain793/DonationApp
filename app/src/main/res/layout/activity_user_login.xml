@@ -41,7 +41,7 @@
             android:id="@+id/et_email"
             android:paddingLeft="10dp"
             android:textColorHint="#C9673AB7"
-            android:hint="Email"
+            android:hint="User ID"
             android:inputType="textEmailAddress"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
